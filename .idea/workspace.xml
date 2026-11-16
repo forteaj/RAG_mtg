@@ -4,9 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0a704e38-4a9b-4903-a39a-86d9d5ededcc" name="Changes" comment="bedrockTest">
-      <change afterPath="$PROJECT_DIR$/ingest_rules.py" afterDir="false" />
+    <list default="true" id="0a704e38-4a9b-4903-a39a-86d9d5ededcc" name="Changes" comment="generator">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/check_bedrock.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/check_rules.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/retrieve_rules.py" beforeDir="false" afterPath="$PROJECT_DIR$/retrieve_rules.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/search_rules.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +54,7 @@
     "Python.check_embeddings.executor": "Run",
     "Python.check_rules.executor": "Run",
     "Python.demo.executor": "Run",
+    "Python.fetch_cards.executor": "Run",
     "Python.ingest_rules.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
@@ -102,12 +107,29 @@
       <option name="project" value="LOCAL" />
       <updated>1794840316678</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="generator">
+      <option name="closed" value="true" />
+      <created>1794851196691</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1794851196691</updated>
+    </task>
+    <task id="LOCAL-00005" summary="generator">
+      <option name="closed" value="true" />
+      <created>1794851206343</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1794851206343</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first" />
     <MESSAGE value="bedrockTest" />
-    <option name="LAST_COMMIT_MESSAGE" value="bedrockTest" />
+    <MESSAGE value="generator" />
+    <option name="LAST_COMMIT_MESSAGE" value="generator" />
   </component>
 </project>
