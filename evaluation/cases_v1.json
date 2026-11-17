@@ -1,0 +1,1154 @@
+{
+  "schema_version": 1,
+  "benchmark_id": "mtg-rulings-v1",
+  "description": "English development/regression suite. Gold expectations and reference diagnostics are never sent to the RAG API. Not a held-out general accuracy benchmark.",
+  "rules_effective_date": "2026-11-06",
+  "rules_source_url": "https://media.wizards.com/2026/downloads/MagicCompRules%2020261106.txt",
+  "rules_source_sha256": "524f5195a1e5f54bb13c735edf399ac717a4458e2713f398d1a3e6877186b829",
+  "reference_catalog_sha256": "a5a398284ffa6719037862b46941d3ebbba7ce7f03261486755933e292873b8a",
+  "cases": [
+    {
+      "id": "MTG-001",
+      "title": "Blood Artist + Rest in Peace",
+      "category": "replacement",
+      "kind": "count",
+      "regression_case": true,
+      "request": {
+        "question": "I control Blood Artist and two other vanilla creatures. An opponent controls one vanilla creature and Rest in Peace. Wrath of God resolves. None of the creatures has indestructible. There are no other relevant effects, abilities or responses. No creature is a commander. How many times does my Blood Artist ability trigger?",
+        "cards": [
+          "Blood Artist",
+          "Rest in Peace",
+          "Wrath of God"
+        ]
+      },
+      "expected": {
+        "status": "answered",
+        "summary_es": "0 disparos.",
+        "reasoning_points_es": [
+          "Las cuatro criaturas se exilian; ninguna muere."
+        ],
+        "manual_review_required": true,
+        "trigger_count": 0
+      },
+      "reference_rule_ids": [
+        "700.4",
+        "614.6",
+        "603.2g"
+      ],
+      "reference_cards": [
+        {
+          "card_name": "Blood Artist",
+          "oracle_id": "310f141c-7f37-4729-aed6-dd9c09db448d",
+          "source_url": "https://scryfall.com/card/soc/209/blood-artist?utm_source=api"
+        },
+        {
+          "card_name": "Rest in Peace",
+          "oracle_id": "087f9ad7-e74f-40e2-8102-1ed2925d0418",
+          "source_url": "https://scryfall.com/card/big/4/rest-in-peace?utm_source=api"
+        },
+        {
+          "card_name": "Wrath of God",
+          "oracle_id": "34515b16-c9a4-4f98-8c77-416a7a523407",
+          "source_url": "https://scryfall.com/card/trc/433/wrath-of-god?utm_source=api"
+        }
+      ],
+      "support_groups_diagnostic": [
+        {
+          "label": "Morir",
+          "rule_ids": [
+            "700.4"
+          ],
+          "card_names": [
+            "Blood Artist"
+          ]
+        },
+        {
+          "label": "Reemplazo",
+          "rule_ids": [
+            "614.6",
+            "603.2g"
+          ],
+          "card_names": [
+            "Rest in Peace"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MTG-002",
+      "title": "Blood Artist sin Rest in Peace",
+      "category": "triggers",
+      "kind": "count",
+      "regression_case": true,
+      "request": {
+        "question": "I control Blood Artist and two other vanilla creatures. An opponent controls one vanilla creature. There is no Rest in Peace on the battlefield. Wrath of God resolves. None of the creatures has indestructible. There are no other relevant effects, abilities or responses. No creature is a commander. How many times does my Blood Artist ability trigger?",
+        "cards": [
+          "Blood Artist",
+          "Rest in Peace",
+          "Wrath of God"
+        ]
+      },
+      "expected": {
+        "status": "answered",
+        "summary_es": "4 disparos.",
+        "reasoning_points_es": [
+          "Se cuentan Blood Artist, las otras dos criaturas propias y la del oponente."
+        ],
+        "manual_review_required": true,
+        "trigger_count": 4
+      },
+      "reference_rule_ids": [
+        "700.4",
+        "603.2c",
+        "603.10a"
+      ],
+      "reference_cards": [
+        {
+          "card_name": "Blood Artist",
+          "oracle_id": "310f141c-7f37-4729-aed6-dd9c09db448d",
+          "source_url": "https://scryfall.com/card/soc/209/blood-artist?utm_source=api"
+        },
+        {
+          "card_name": "Rest in Peace",
+          "oracle_id": "087f9ad7-e74f-40e2-8102-1ed2925d0418",
+          "source_url": "https://scryfall.com/card/big/4/rest-in-peace?utm_source=api"
+        },
+        {
+          "card_name": "Wrath of God",
+          "oracle_id": "34515b16-c9a4-4f98-8c77-416a7a523407",
+          "source_url": "https://scryfall.com/card/trc/433/wrath-of-god?utm_source=api"
+        }
+      ],
+      "support_groups_diagnostic": [
+        {
+          "label": "Muertes simultáneas",
+          "rule_ids": [
+            "603.2c",
+            "603.10a"
+          ],
+          "card_names": [
+            "Blood Artist"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MTG-003",
+      "title": "Las fichas también mueren",
+      "category": "tokens",
+      "kind": "count",
+      "regression_case": false,
+      "request": {
+        "question": "I control Blood Artist and two vanilla 2/2 creature tokens. An opponent controls one nontoken vanilla creature. Wrath of God resolves. No creature has indestructible and there are no replacement effects. There are no other relevant effects, abilities or responses. No creature is a commander. How many times does my Blood Artist ability trigger?",
+        "cards": [
+          "Blood Artist",
+          "Wrath of God"
+        ]
+      },
+      "expected": {
+        "status": "answered",
+        "summary_es": "4 disparos.",
+        "reasoning_points_es": [
+          "Las fichas pasan al cementerio antes de dejar de existir."
+        ],
+        "manual_review_required": true,
+        "trigger_count": 4
+      },
+      "reference_rule_ids": [
+        "700.4",
+        "111.7",
+        "704.5d",
+        "603.10a"
+      ],
+      "reference_cards": [
+        {
+          "card_name": "Blood Artist",
+          "oracle_id": "310f141c-7f37-4729-aed6-dd9c09db448d",
+          "source_url": "https://scryfall.com/card/soc/209/blood-artist?utm_source=api"
+        },
+        {
+          "card_name": "Wrath of God",
+          "oracle_id": "34515b16-c9a4-4f98-8c77-416a7a523407",
+          "source_url": "https://scryfall.com/card/trc/433/wrath-of-god?utm_source=api"
+        }
+      ],
+      "support_groups_diagnostic": [
+        {
+          "label": "Fichas",
+          "rule_ids": [
+            "111.7",
+            "704.5d"
+          ],
+          "card_names": []
+        },
+        {
+          "label": "Disparos",
+          "rule_ids": [
+            "603.2c",
+            "603.10a"
+          ],
+          "card_names": [
+            "Blood Artist"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MTG-004",
+      "title": "Una criatura indestructible sobrevive",
+      "category": "indestructible",
+      "kind": "count",
+      "regression_case": false,
+      "request": {
+        "question": "I control Blood Artist and two other vanilla creatures. My opponent controls Darksteel Myr. Wrath of God resolves. Only Darksteel Myr has indestructible and there are no replacement effects. There are no other relevant effects, abilities or responses. No creature is a commander. How many times does my Blood Artist ability trigger?",
+        "cards": [
+          "Blood Artist",
+          "Darksteel Myr",
+          "Wrath of God"
+        ]
+      },
+      "expected": {
+        "status": "answered",
+        "summary_es": "3 disparos.",
+        "reasoning_points_es": [
+          "Darksteel Myr sobrevive; mueren las otras tres criaturas."
+        ],
+        "manual_review_required": true,
+        "trigger_count": 3
+      },
+      "reference_rule_ids": [
+        "702.12b",
+        "603.10a"
+      ],
+      "reference_cards": [
+        {
+          "card_name": "Blood Artist",
+          "oracle_id": "310f141c-7f37-4729-aed6-dd9c09db448d",
+          "source_url": "https://scryfall.com/card/soc/209/blood-artist?utm_source=api"
+        },
+        {
+          "card_name": "Darksteel Myr",
+          "oracle_id": "f90fe86c-5cca-483b-93c2-6e856fa01c88",
+          "source_url": "https://scryfall.com/card/som/151/darksteel-myr?utm_source=api"
+        },
+        {
+          "card_name": "Wrath of God",
+          "oracle_id": "34515b16-c9a4-4f98-8c77-416a7a523407",
+          "source_url": "https://scryfall.com/card/trc/433/wrath-of-god?utm_source=api"
+        }
+      ],
+      "support_groups_diagnostic": [
+        {
+          "label": "Indestructible",
+          "rule_ids": [
+            "702.12b"
+          ],
+          "card_names": [
+            "Darksteel Myr"
+          ]
+        },
+        {
+          "label": "Disparos",
+          "rule_ids": [
+            "603.10a",
+            "603.2c"
+          ],
+          "card_names": [
+            "Blood Artist"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MTG-005",
+      "title": "Sacrificar una criatura indestructible",
+      "category": "sacrifice",
+      "kind": "count",
+      "regression_case": false,
+      "request": {
+        "question": "I control Blood Artist, Viscera Seer and Darksteel Myr. I activate Viscera Seer, sacrificing Darksteel Myr as the cost. There are no replacement effects. There are no other relevant effects, abilities or responses. No creature is a commander. How many times does my Blood Artist ability trigger?",
+        "cards": [
+          "Blood Artist",
+          "Viscera Seer",
+          "Darksteel Myr"
+        ]
+      },
+      "expected": {
+        "status": "answered",
+        "summary_es": "1 disparo.",
+        "reasoning_points_es": [
+          "Indestructible no impide pagar el sacrificio ni la muerte."
+        ],
+        "manual_review_required": true,
+        "trigger_count": 1
+      },
+      "reference_rule_ids": [
+        "701.21a",
+        "702.12b",
+        "700.4"
+      ],
+      "reference_cards": [
+        {
+          "card_name": "Blood Artist",
+          "oracle_id": "310f141c-7f37-4729-aed6-dd9c09db448d",
+          "source_url": "https://scryfall.com/card/soc/209/blood-artist?utm_source=api"
+        },
+        {
+          "card_name": "Viscera Seer",
+          "oracle_id": "f82a4e85-526d-4456-b700-7760043a31be",
+          "source_url": "https://scryfall.com/card/soc/229/viscera-seer?utm_source=api"
+        },
+        {
+          "card_name": "Darksteel Myr",
+          "oracle_id": "f90fe86c-5cca-483b-93c2-6e856fa01c88",
+          "source_url": "https://scryfall.com/card/som/151/darksteel-myr?utm_source=api"
+        }
+      ],
+      "support_groups_diagnostic": [
+        {
+          "label": "Sacrificio",
+          "rule_ids": [
+            "701.21a",
+            "702.12b"
+          ],
+          "card_names": [
+            "Viscera Seer",
+            "Darksteel Myr"
+          ]
+        },
+        {
+          "label": "Muerte",
+          "rule_ids": [
+            "700.4"
+          ],
+          "card_names": [
+            "Blood Artist"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MTG-006",
+      "title": "Sacrificio con Rest in Peace",
+      "category": "replacement",
+      "kind": "count",
+      "regression_case": false,
+      "request": {
+        "question": "I control Blood Artist, Viscera Seer, Rest in Peace and a vanilla 2/2 creature. I activate Viscera Seer and sacrifice that vanilla creature to pay its cost. There are no other relevant effects, abilities or responses. No creature is a commander. How many times does my Blood Artist ability trigger?",
+        "cards": [
+          "Blood Artist",
+          "Viscera Seer",
+          "Rest in Peace"
+        ]
+      },
+      "expected": {
+        "status": "answered",
+        "summary_es": "0 disparos.",
+        "reasoning_points_es": [
+          "Se paga el sacrificio, pero la criatura se exilia en lugar de morir."
+        ],
+        "manual_review_required": true,
+        "trigger_count": 0
+      },
+      "reference_rule_ids": [
+        "701.21a",
+        "614.6",
+        "700.4"
+      ],
+      "reference_cards": [
+        {
+          "card_name": "Blood Artist",
+          "oracle_id": "310f141c-7f37-4729-aed6-dd9c09db448d",
+          "source_url": "https://scryfall.com/card/soc/209/blood-artist?utm_source=api"
+        },
+        {
+          "card_name": "Viscera Seer",
+          "oracle_id": "f82a4e85-526d-4456-b700-7760043a31be",
+          "source_url": "https://scryfall.com/card/soc/229/viscera-seer?utm_source=api"
+        },
+        {
+          "card_name": "Rest in Peace",
+          "oracle_id": "087f9ad7-e74f-40e2-8102-1ed2925d0418",
+          "source_url": "https://scryfall.com/card/big/4/rest-in-peace?utm_source=api"
+        }
+      ],
+      "support_groups_diagnostic": [
+        {
+          "label": "Reemplazo",
+          "rule_ids": [
+            "614.6",
+            "603.2g"
+          ],
+          "card_names": [
+            "Rest in Peace"
+          ]
+        },
+        {
+          "label": "Disparo de muerte",
+          "rule_ids": [
+            "700.4"
+          ],
+          "card_names": [
+            "Blood Artist"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MTG-007",
+      "title": "Panharmonicon no duplica muertes",
+      "category": "trigger_modifiers",
+      "kind": "count",
+      "regression_case": false,
+      "request": {
+        "question": "I control Blood Artist, Panharmonicon and two other vanilla creatures. An opponent controls one vanilla creature. Wrath of God resolves. No creature has indestructible and there are no replacement effects. There are no other relevant effects, abilities or responses. No creature is a commander. How many times does my Blood Artist ability trigger?",
+        "cards": [
+          "Blood Artist",
+          "Panharmonicon",
+          "Wrath of God"
+        ]
+      },
+      "expected": {
+        "status": "answered",
+        "summary_es": "4 disparos.",
+        "reasoning_points_es": [
+          "Panharmonicon afecta entradas, no estas muertes."
+        ],
+        "manual_review_required": true,
+        "trigger_count": 4
+      },
+      "reference_rule_ids": [
+        "603.2c",
+        "603.10a"
+      ],
+      "reference_cards": [
+        {
+          "card_name": "Blood Artist",
+          "oracle_id": "310f141c-7f37-4729-aed6-dd9c09db448d",
+          "source_url": "https://scryfall.com/card/soc/209/blood-artist?utm_source=api"
+        },
+        {
+          "card_name": "Panharmonicon",
+          "oracle_id": "76678885-3674-443d-b9a2-2a460cf6aac0",
+          "source_url": "https://scryfall.com/card/2x2/310/panharmonicon?utm_source=api"
+        },
+        {
+          "card_name": "Wrath of God",
+          "oracle_id": "34515b16-c9a4-4f98-8c77-416a7a523407",
+          "source_url": "https://scryfall.com/card/trc/433/wrath-of-god?utm_source=api"
+        }
+      ],
+      "support_groups_diagnostic": [
+        {
+          "label": "Alcance del modificador",
+          "rule_ids": [],
+          "card_names": [
+            "Panharmonicon"
+          ]
+        },
+        {
+          "label": "Disparos",
+          "rule_ids": [
+            "603.2c",
+            "603.10a"
+          ],
+          "card_names": [
+            "Blood Artist"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MTG-008",
+      "title": "Teysa duplica incluso al morir simultáneamente",
+      "category": "trigger_modifiers",
+      "kind": "count",
+      "regression_case": false,
+      "request": {
+        "question": "I control Blood Artist, Teysa Karlov and one other vanilla creature. An opponent controls one vanilla creature. Wrath of God resolves. No creature has indestructible and there are no replacement effects. There are no other relevant effects, abilities or responses. No creature is a commander. How many times does my Blood Artist ability trigger?",
+        "cards": [
+          "Blood Artist",
+          "Teysa Karlov",
+          "Wrath of God"
+        ]
+      },
+      "expected": {
+        "status": "answered",
+        "summary_es": "8 disparos.",
+        "reasoning_points_es": [
+          "Las cuatro muertes producen dos disparos cada una."
+        ],
+        "manual_review_required": true,
+        "trigger_count": 8
+      },
+      "reference_rule_ids": [
+        "603.2d",
+        "603.10a"
+      ],
+      "reference_cards": [
+        {
+          "card_name": "Blood Artist",
+          "oracle_id": "310f141c-7f37-4729-aed6-dd9c09db448d",
+          "source_url": "https://scryfall.com/card/soc/209/blood-artist?utm_source=api"
+        },
+        {
+          "card_name": "Teysa Karlov",
+          "oracle_id": "644eeefd-e684-4ca8-8aef-a892ca130c07",
+          "source_url": "https://scryfall.com/card/cmm/359/teysa-karlov?utm_source=api"
+        },
+        {
+          "card_name": "Wrath of God",
+          "oracle_id": "34515b16-c9a4-4f98-8c77-416a7a523407",
+          "source_url": "https://scryfall.com/card/trc/433/wrath-of-god?utm_source=api"
+        }
+      ],
+      "support_groups_diagnostic": [
+        {
+          "label": "Duplicación",
+          "rule_ids": [
+            "603.2d"
+          ],
+          "card_names": [
+            "Teysa Karlov"
+          ]
+        },
+        {
+          "label": "Simultaneidad",
+          "rule_ids": [
+            "603.10a"
+          ],
+          "card_names": [
+            "Blood Artist",
+            "Teysa Karlov"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MTG-009",
+      "title": "Soul Warden y dos fichas",
+      "category": "etb",
+      "kind": "count",
+      "regression_case": false,
+      "request": {
+        "question": "I control Soul Warden. Raise the Alarm resolves and creates its two Soldier creature tokens. There are no other relevant effects, abilities or responses. No creature is a commander. How many times does my Soul Warden ability trigger from those creatures entering?",
+        "cards": [
+          "Soul Warden",
+          "Raise the Alarm"
+        ]
+      },
+      "expected": {
+        "status": "answered",
+        "summary_es": "2 disparos.",
+        "reasoning_points_es": [
+          "Se cuenta una entrada por cada ficha."
+        ],
+        "manual_review_required": true,
+        "trigger_count": 2
+      },
+      "reference_rule_ids": [
+        "603.2c"
+      ],
+      "reference_cards": [
+        {
+          "card_name": "Soul Warden",
+          "oracle_id": "f3fad295-1af2-4ecc-8546-b121ad6be27b",
+          "source_url": "https://scryfall.com/card/mm3/24/soul-warden?utm_source=api"
+        },
+        {
+          "card_name": "Raise the Alarm",
+          "oracle_id": "5b2364d7-a811-4595-a1b4-224c70555ffa",
+          "source_url": "https://scryfall.com/card/j25/101/raise-the-alarm?utm_source=api"
+        }
+      ],
+      "support_groups_diagnostic": [
+        {
+          "label": "Habilidad",
+          "rule_ids": [],
+          "card_names": [
+            "Soul Warden"
+          ]
+        },
+        {
+          "label": "Dos entradas",
+          "rule_ids": [
+            "603.2c"
+          ],
+          "card_names": [
+            "Raise the Alarm"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MTG-010",
+      "title": "Panharmonicon duplica entradas",
+      "category": "etb",
+      "kind": "count",
+      "regression_case": false,
+      "request": {
+        "question": "I control Soul Warden and Panharmonicon. Raise the Alarm resolves and creates its two Soldier creature tokens. There are no other relevant effects, abilities or responses. No creature is a commander. How many times does my Soul Warden ability trigger from those creatures entering?",
+        "cards": [
+          "Soul Warden",
+          "Panharmonicon",
+          "Raise the Alarm"
+        ]
+      },
+      "expected": {
+        "status": "answered",
+        "summary_es": "4 disparos.",
+        "reasoning_points_es": [
+          "Dos entradas, cada una con un disparo adicional."
+        ],
+        "manual_review_required": true,
+        "trigger_count": 4
+      },
+      "reference_rule_ids": [
+        "603.2c",
+        "603.2d"
+      ],
+      "reference_cards": [
+        {
+          "card_name": "Soul Warden",
+          "oracle_id": "f3fad295-1af2-4ecc-8546-b121ad6be27b",
+          "source_url": "https://scryfall.com/card/mm3/24/soul-warden?utm_source=api"
+        },
+        {
+          "card_name": "Panharmonicon",
+          "oracle_id": "76678885-3674-443d-b9a2-2a460cf6aac0",
+          "source_url": "https://scryfall.com/card/2x2/310/panharmonicon?utm_source=api"
+        },
+        {
+          "card_name": "Raise the Alarm",
+          "oracle_id": "5b2364d7-a811-4595-a1b4-224c70555ffa",
+          "source_url": "https://scryfall.com/card/j25/101/raise-the-alarm?utm_source=api"
+        }
+      ],
+      "support_groups_diagnostic": [
+        {
+          "label": "Duplicación",
+          "rule_ids": [
+            "603.2d"
+          ],
+          "card_names": [
+            "Panharmonicon"
+          ]
+        },
+        {
+          "label": "Entradas",
+          "rule_ids": [
+            "603.2c"
+          ],
+          "card_names": [
+            "Soul Warden",
+            "Raise the Alarm"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MTG-011",
+      "title": "Reach puede bloquear flying",
+      "category": "combat",
+      "kind": "qualitative",
+      "regression_case": true,
+      "request": {
+        "question": "I control an untapped Giant Spider that is able to block. My opponent attacks me with Wind Drake. There are no other effects or blocking restrictions. Can Giant Spider block Wind Drake?",
+        "cards": [
+          "Giant Spider",
+          "Wind Drake"
+        ]
+      },
+      "expected": {
+        "status": "answered",
+        "summary_es": "Sí.",
+        "reasoning_points_es": [
+          "Reach permite ese bloqueo."
+        ],
+        "manual_review_required": true
+      },
+      "reference_rule_ids": [
+        "702.9b",
+        "702.17b"
+      ],
+      "reference_cards": [
+        {
+          "card_name": "Giant Spider",
+          "oracle_id": "e740ce2f-2134-473c-afa1-1b6d2d1e38ef",
+          "source_url": "https://scryfall.com/card/dmr/163/giant-spider?utm_source=api"
+        },
+        {
+          "card_name": "Wind Drake",
+          "oracle_id": "d6ffdaf0-ac08-4de9-bbce-2eab2f86bcca",
+          "source_url": "https://scryfall.com/card/kld/70/wind-drake?utm_source=api"
+        }
+      ],
+      "support_groups_diagnostic": [
+        {
+          "label": "Flying y reach",
+          "rule_ids": [
+            "702.9b",
+            "702.17b"
+          ],
+          "card_names": [
+            "Giant Spider"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MTG-012",
+      "title": "Una criatura sin reach no bloquea flying",
+      "category": "combat",
+      "kind": "qualitative",
+      "regression_case": false,
+      "request": {
+        "question": "I control untapped Grizzly Bears that are able to block. My opponent attacks me with Wind Drake. No effect grants Grizzly Bears flying or reach, and there are no other relevant effects. Can Grizzly Bears block Wind Drake?",
+        "cards": [
+          "Grizzly Bears",
+          "Wind Drake"
+        ]
+      },
+      "expected": {
+        "status": "answered",
+        "summary_es": "No.",
+        "reasoning_points_es": [
+          "El bloqueador carece de flying y reach."
+        ],
+        "manual_review_required": true
+      },
+      "reference_rule_ids": [
+        "702.9b"
+      ],
+      "reference_cards": [
+        {
+          "card_name": "Grizzly Bears",
+          "oracle_id": "14c8f55d-d177-4c25-a931-ebeb9e6062a0",
+          "source_url": "https://scryfall.com/card/10e/268/grizzly-bears?utm_source=api"
+        },
+        {
+          "card_name": "Wind Drake",
+          "oracle_id": "d6ffdaf0-ac08-4de9-bbce-2eab2f86bcca",
+          "source_url": "https://scryfall.com/card/kld/70/wind-drake?utm_source=api"
+        }
+      ],
+      "support_groups_diagnostic": [
+        {
+          "label": "Restricción de flying",
+          "rule_ids": [
+            "702.9b"
+          ],
+          "card_names": [
+            "Wind Drake"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MTG-013",
+      "title": "Indestructible con resistencia cero",
+      "category": "indestructible",
+      "kind": "qualitative",
+      "regression_case": true,
+      "request": {
+        "question": "I control Darksteel Myr. Its current toughness is 0. It still has indestructible. There are no replacement effects or other relevant effects. When state-based actions are checked, is Darksteel Myr put into its owner's graveyard?",
+        "cards": [
+          "Darksteel Myr"
+        ]
+      },
+      "expected": {
+        "status": "answered",
+        "summary_es": "Sí.",
+        "reasoning_points_es": [
+          "La acción por resistencia cero no destruye."
+        ],
+        "manual_review_required": true
+      },
+      "reference_rule_ids": [
+        "704.5f",
+        "702.12b"
+      ],
+      "reference_cards": [
+        {
+          "card_name": "Darksteel Myr",
+          "oracle_id": "f90fe86c-5cca-483b-93c2-6e856fa01c88",
+          "source_url": "https://scryfall.com/card/som/151/darksteel-myr?utm_source=api"
+        }
+      ],
+      "support_groups_diagnostic": [
+        {
+          "label": "Resistencia cero",
+          "rule_ids": [
+            "704.5f"
+          ],
+          "card_names": [
+            "Darksteel Myr"
+          ]
+        },
+        {
+          "label": "Límite de indestructible",
+          "rule_ids": [
+            "702.12b"
+          ],
+          "card_names": [
+            "Darksteel Myr"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MTG-014",
+      "title": "Indestructible frente a destruir",
+      "category": "indestructible",
+      "kind": "qualitative",
+      "regression_case": false,
+      "request": {
+        "question": "I control Darksteel Myr with its normal positive toughness. Wrath of God resolves. Darksteel Myr retains indestructible, and there are no other relevant effects. Does Wrath of God destroy Darksteel Myr?",
+        "cards": [
+          "Darksteel Myr",
+          "Wrath of God"
+        ]
+      },
+      "expected": {
+        "status": "answered",
+        "summary_es": "No.",
+        "reasoning_points_es": [
+          "Indestructible impide la destrucción."
+        ],
+        "manual_review_required": true
+      },
+      "reference_rule_ids": [
+        "702.12b"
+      ],
+      "reference_cards": [
+        {
+          "card_name": "Darksteel Myr",
+          "oracle_id": "f90fe86c-5cca-483b-93c2-6e856fa01c88",
+          "source_url": "https://scryfall.com/card/som/151/darksteel-myr?utm_source=api"
+        },
+        {
+          "card_name": "Wrath of God",
+          "oracle_id": "34515b16-c9a4-4f98-8c77-416a7a523407",
+          "source_url": "https://scryfall.com/card/trc/433/wrath-of-god?utm_source=api"
+        }
+      ],
+      "support_groups_diagnostic": [
+        {
+          "label": "Indestructible",
+          "rule_ids": [
+            "702.12b"
+          ],
+          "card_names": [
+            "Darksteel Myr"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MTG-015",
+      "title": "Hexproof impide el objetivo rival",
+      "category": "targeting",
+      "kind": "qualitative",
+      "regression_case": false,
+      "request": {
+        "question": "My opponent controls Sylvan Caryatid, which retains hexproof. I want to cast Swords to Plowshares targeting that Sylvan Caryatid. There are no other relevant effects. Is that a legal target for my spell?",
+        "cards": [
+          "Sylvan Caryatid",
+          "Swords to Plowshares"
+        ]
+      },
+      "expected": {
+        "status": "answered",
+        "summary_es": "No.",
+        "reasoning_points_es": [
+          "El hechizo rival intenta hacer objetivo a la criatura."
+        ],
+        "manual_review_required": true
+      },
+      "reference_rule_ids": [
+        "702.11b",
+        "115.1a"
+      ],
+      "reference_cards": [
+        {
+          "card_name": "Sylvan Caryatid",
+          "oracle_id": "13d4c46b-c2d6-44cc-a252-4a991d471854",
+          "source_url": "https://scryfall.com/card/tdc/272/sylvan-caryatid?utm_source=api"
+        },
+        {
+          "card_name": "Swords to Plowshares",
+          "oracle_id": "b1544f21-7e98-461b-aed5-e748b0168c52",
+          "source_url": "https://scryfall.com/card/trc/429/swords-to-plowshares?utm_source=api"
+        }
+      ],
+      "support_groups_diagnostic": [
+        {
+          "label": "Hexproof",
+          "rule_ids": [
+            "702.11b"
+          ],
+          "card_names": [
+            "Sylvan Caryatid"
+          ]
+        },
+        {
+          "label": "Objetivo",
+          "rule_ids": [
+            "115.1a"
+          ],
+          "card_names": [
+            "Swords to Plowshares"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MTG-016",
+      "title": "Hexproof no impide un edicto al jugador",
+      "category": "targeting",
+      "kind": "qualitative",
+      "regression_case": false,
+      "request": {
+        "question": "My opponent controls only Sylvan Caryatid as a creature. It retains hexproof. I cast Diabolic Edict targeting that opponent, who can legally be targeted. The spell resolves. There are no other relevant effects. Must my opponent sacrifice Sylvan Caryatid?",
+        "cards": [
+          "Sylvan Caryatid",
+          "Diabolic Edict"
+        ]
+      },
+      "expected": {
+        "status": "answered",
+        "summary_es": "Sí.",
+        "reasoning_points_es": [
+          "El objetivo es el jugador, no la criatura."
+        ],
+        "manual_review_required": true
+      },
+      "reference_rule_ids": [
+        "702.11b",
+        "115.10a",
+        "701.21a"
+      ],
+      "reference_cards": [
+        {
+          "card_name": "Sylvan Caryatid",
+          "oracle_id": "13d4c46b-c2d6-44cc-a252-4a991d471854",
+          "source_url": "https://scryfall.com/card/tdc/272/sylvan-caryatid?utm_source=api"
+        },
+        {
+          "card_name": "Diabolic Edict",
+          "oracle_id": "058917c1-21ab-488a-9f9c-591c55f3c596",
+          "source_url": "https://scryfall.com/card/mh1/87/diabolic-edict?utm_source=api"
+        }
+      ],
+      "support_groups_diagnostic": [
+        {
+          "label": "Objetivo del edicto",
+          "rule_ids": [
+            "115.10a"
+          ],
+          "card_names": [
+            "Diabolic Edict"
+          ]
+        },
+        {
+          "label": "Hexproof",
+          "rule_ids": [
+            "702.11b"
+          ],
+          "card_names": [
+            "Sylvan Caryatid"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MTG-017",
+      "title": "Commander tax tras dos lanzamientos",
+      "category": "commander",
+      "kind": "qualitative",
+      "regression_case": false,
+      "request": {
+        "question": "My commander is Isamaru, Hound of Konda. I have previously cast it twice from the command zone this game. It is in the command zone again. There are no cost reductions, cost increases or alternative costs other than commander tax. How much additional generic mana does commander tax add to its next cast?",
+        "cards": [
+          "Isamaru, Hound of Konda"
+        ]
+      },
+      "expected": {
+        "status": "answered",
+        "summary_es": "4 manás genéricos adicionales.",
+        "reasoning_points_es": [
+          "El coste total es {4}{W}."
+        ],
+        "manual_review_required": true
+      },
+      "reference_rule_ids": [
+        "903.8"
+      ],
+      "reference_cards": [
+        {
+          "card_name": "Isamaru, Hound of Konda",
+          "oracle_id": "cfb756dd-6fe1-430a-8f04-8b10cac62a86",
+          "source_url": "https://scryfall.com/card/jmp/113/isamaru-hound-of-konda?utm_source=api"
+        }
+      ],
+      "support_groups_diagnostic": [
+        {
+          "label": "Commander tax",
+          "rule_ids": [
+            "903.8"
+          ],
+          "card_names": []
+        }
+      ]
+    },
+    {
+      "id": "MTG-018",
+      "title": "Un comandante muere antes de volver a la zona de mando",
+      "category": "commander",
+      "kind": "count",
+      "regression_case": false,
+      "request": {
+        "question": "I control Blood Artist and my commander Yargle, Glutton of Urborg. An opponent's Murder resolves targeting Yargle and destroys it. There are no replacement effects, no indestructible, and no other relevant effects or abilities. When state-based actions are next checked, I choose to move Yargle from my graveyard to the command zone. How many times does my Blood Artist ability trigger?",
+        "cards": [
+          "Blood Artist",
+          "Yargle, Glutton of Urborg",
+          "Murder"
+        ]
+      },
+      "expected": {
+        "status": "answered",
+        "summary_es": "1 disparo.",
+        "reasoning_points_es": [
+          "Yargle pasó por el cementerio antes de la zona de mando."
+        ],
+        "manual_review_required": true,
+        "trigger_count": 1
+      },
+      "reference_rule_ids": [
+        "903.9a",
+        "700.4",
+        "603.10a"
+      ],
+      "reference_cards": [
+        {
+          "card_name": "Blood Artist",
+          "oracle_id": "310f141c-7f37-4729-aed6-dd9c09db448d",
+          "source_url": "https://scryfall.com/card/soc/209/blood-artist?utm_source=api"
+        },
+        {
+          "card_name": "Yargle, Glutton of Urborg",
+          "oracle_id": "ed66cd31-958f-4b28-82a3-e04acc819afc",
+          "source_url": "https://scryfall.com/card/fra/241/yargle-glutton-of-urborg?utm_source=api"
+        },
+        {
+          "card_name": "Murder",
+          "oracle_id": "938b4e2c-88d9-4637-bc00-e228920c9a78",
+          "source_url": "https://scryfall.com/card/j25/467/murder?utm_source=api"
+        }
+      ],
+      "support_groups_diagnostic": [
+        {
+          "label": "Zona de mando",
+          "rule_ids": [
+            "903.9a"
+          ],
+          "card_names": []
+        },
+        {
+          "label": "Muerte",
+          "rule_ids": [
+            "700.4",
+            "603.10a"
+          ],
+          "card_names": [
+            "Blood Artist"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MTG-019",
+      "title": "Falta el número de criaturas",
+      "category": "clarification",
+      "kind": "clarification",
+      "regression_case": false,
+      "request": {
+        "question": "I control Blood Artist and some other vanilla creatures. An opponent also controls some vanilla creatures. I have not specified how many creatures either player controls. Wrath of God resolves. No creature has indestructible and there are no replacement effects or other relevant abilities. Exactly how many times does my Blood Artist ability trigger?",
+        "cards": [
+          "Blood Artist",
+          "Wrath of God"
+        ]
+      },
+      "expected": {
+        "status": "needs_clarification",
+        "summary_es": "Pedir el número total de criaturas.",
+        "reasoning_points_es": [
+          "No se puede dar un número exacto con esos datos."
+        ],
+        "manual_review_required": true
+      },
+      "reference_rule_ids": [
+        "603.2c",
+        "603.10a"
+      ],
+      "reference_cards": [
+        {
+          "card_name": "Blood Artist",
+          "oracle_id": "310f141c-7f37-4729-aed6-dd9c09db448d",
+          "source_url": "https://scryfall.com/card/soc/209/blood-artist?utm_source=api"
+        },
+        {
+          "card_name": "Wrath of God",
+          "oracle_id": "34515b16-c9a4-4f98-8c77-416a7a523407",
+          "source_url": "https://scryfall.com/card/trc/433/wrath-of-god?utm_source=api"
+        }
+      ],
+      "support_groups_diagnostic": []
+    },
+    {
+      "id": "MTG-020",
+      "title": "Falta saber si el reemplazo está activo",
+      "category": "clarification",
+      "kind": "clarification",
+      "regression_case": false,
+      "request": {
+        "question": "I control Blood Artist and one other vanilla creature. My opponent controls one vanilla creature. Wrath of God resolves. None of these creatures has indestructible or is a commander. I have not specified whether Rest in Peace is on the battlefield. There are no other relevant effects. Exactly how many times does my Blood Artist ability trigger?",
+        "cards": [
+          "Blood Artist",
+          "Rest in Peace",
+          "Wrath of God"
+        ]
+      },
+      "expected": {
+        "status": "needs_clarification",
+        "summary_es": "Preguntar si Rest in Peace está presente.",
+        "reasoning_points_es": [
+          "Según ese dato el resultado sería 0 o 3."
+        ],
+        "manual_review_required": true
+      },
+      "reference_rule_ids": [
+        "700.4",
+        "614.6"
+      ],
+      "reference_cards": [
+        {
+          "card_name": "Blood Artist",
+          "oracle_id": "310f141c-7f37-4729-aed6-dd9c09db448d",
+          "source_url": "https://scryfall.com/card/soc/209/blood-artist?utm_source=api"
+        },
+        {
+          "card_name": "Rest in Peace",
+          "oracle_id": "087f9ad7-e74f-40e2-8102-1ed2925d0418",
+          "source_url": "https://scryfall.com/card/big/4/rest-in-peace?utm_source=api"
+        },
+        {
+          "card_name": "Wrath of God",
+          "oracle_id": "34515b16-c9a4-4f98-8c77-416a7a523407",
+          "source_url": "https://scryfall.com/card/trc/433/wrath-of-god?utm_source=api"
+        }
+      ],
+      "support_groups_diagnostic": []
+    }
+  ]
+}

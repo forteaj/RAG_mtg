@@ -18,7 +18,7 @@ import search_rules as search
 
 
 ROOT = Path(__file__).resolve().parent
-PIPELINE_VERSION = "1.5.0"
+PIPELINE_VERSION = "1.5.1"
 LLM_MODEL = "eu.amazon.nova-2-lite-v1:0"
 SMOKE_QUESTION = "Does a creature die if it is exiled instead of going to the graveyard?"
 
@@ -115,6 +115,9 @@ nonnegative integer in trigger_count. Otherwise use null. When a count is
 provided, explain its basis without repeating the numerical count in answer.
 Valid statuses: answered, needs_clarification, insufficient_evidence.
 For needs_clarification supply a clarifying_question; otherwise use null.
+The answer field must always contain a non-empty explanation for every status.
+For needs_clarification, explain in answer which essential fact is missing,
+set trigger_count to null, and ask for that fact in clarifying_question.
 Return ONLY JSON:
 {"status":"answered", "trigger_count":null, "answer":"short explanation",
 "citations":["supplied citation_id"], "clarifying_question":null}
@@ -844,3 +847,4 @@ if __name__ == "__main__":
         main()
     except Exception as exc:
         raise SystemExit(f"ERROR ({type(exc).__name__}): {exc}") from None
+

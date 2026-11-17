@@ -5,12 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0a704e38-4a9b-4903-a39a-86d9d5ededcc" name="Changes" comment="generator">
+      <change afterPath="$PROJECT_DIR$/README-API.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/request_with_rip.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/request_without_rip.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/requirements-api.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/test_api.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/check_bedrock.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/check_rules.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/retrieve_rules.py" beforeDir="false" afterPath="$PROJECT_DIR$/retrieve_rules.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/search_rules.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,22 +48,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python.check_bedrock.executor": "Run",
-    "Python.check_embeddings.executor": "Run",
-    "Python.check_rules.executor": "Run",
-    "Python.demo.executor": "Run",
-    "Python.fetch_cards.executor": "Run",
-    "Python.ingest_rules.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/Jose/masterIA/TFM/PythonProject"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.check_bedrock.executor&quot;: &quot;Run&quot;,
+    &quot;Python.check_embeddings.executor&quot;: &quot;Run&quot;,
+    &quot;Python.check_rules.executor&quot;: &quot;Run&quot;,
+    &quot;Python.demo.executor&quot;: &quot;Run&quot;,
+    &quot;Python.fetch_cards.executor&quot;: &quot;Run&quot;,
+    &quot;Python.ingest_rules.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Jose/masterIA/TFM/PythonProject&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Jose\masterIA\TFM\PythonProject" />

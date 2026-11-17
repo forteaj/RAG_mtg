@@ -1,0 +1,90 @@
+{
+  "verification_type": "Local catalog / reference validation and evaluator unit tests only; not real model evaluation.",
+  "suite_sha256": "4eb1553b207d90fb414c13cebe90b9918c629ac2f2eed55a44c48bd87a27eb03",
+  "case_count": 20,
+  "local_card_identities_checked": 18,
+  "evaluator_unit_tests_passed": 16,
+  "real_bedrock_cases_executed_here": 0,
+  "preflight": {
+    "health": {
+      "status": "ok",
+      "service": "mtg-rulings",
+      "api_version": "0.2.0"
+    },
+    "cards": {
+      "Blood Artist": {
+        "name": "Blood Artist",
+        "oracle_id": "310f141c-7f37-4729-aed6-dd9c09db448d"
+      },
+      "Darksteel Myr": {
+        "name": "Darksteel Myr",
+        "oracle_id": "f90fe86c-5cca-483b-93c2-6e856fa01c88"
+      },
+      "Diabolic Edict": {
+        "name": "Diabolic Edict",
+        "oracle_id": "058917c1-21ab-488a-9f9c-591c55f3c596"
+      },
+      "Giant Spider": {
+        "name": "Giant Spider",
+        "oracle_id": "e740ce2f-2134-473c-afa1-1b6d2d1e38ef"
+      },
+      "Grizzly Bears": {
+        "name": "Grizzly Bears",
+        "oracle_id": "14c8f55d-d177-4c25-a931-ebeb9e6062a0"
+      },
+      "Isamaru, Hound of Konda": {
+        "name": "Isamaru, Hound of Konda",
+        "oracle_id": "cfb756dd-6fe1-430a-8f04-8b10cac62a86"
+      },
+      "Murder": {
+        "name": "Murder",
+        "oracle_id": "938b4e2c-88d9-4637-bc00-e228920c9a78"
+      },
+      "Panharmonicon": {
+        "name": "Panharmonicon",
+        "oracle_id": "76678885-3674-443d-b9a2-2a460cf6aac0"
+      },
+      "Raise the Alarm": {
+        "name": "Raise the Alarm",
+        "oracle_id": "5b2364d7-a811-4595-a1b4-224c70555ffa"
+      },
+      "Rest in Peace": {
+        "name": "Rest in Peace",
+        "oracle_id": "087f9ad7-e74f-40e2-8102-1ed2925d0418"
+      },
+      "Soul Warden": {
+        "name": "Soul Warden",
+        "oracle_id": "f3fad295-1af2-4ecc-8546-b121ad6be27b"
+      },
+      "Swords to Plowshares": {
+        "name": "Swords to Plowshares",
+        "oracle_id": "b1544f21-7e98-461b-aed5-e748b0168c52"
+      },
+      "Sylvan Caryatid": {
+        "name": "Sylvan Caryatid",
+        "oracle_id": "13d4c46b-c2d6-44cc-a252-4a991d471854"
+      },
+      "Teysa Karlov": {
+        "name": "Teysa Karlov",
+        "oracle_id": "644eeefd-e684-4ca8-8aef-a892ca130c07"
+      },
+      "Viscera Seer": {
+        "name": "Viscera Seer",
+        "oracle_id": "f82a4e85-526d-4456-b700-7760043a31be"
+      },
+      "Wind Drake": {
+        "name": "Wind Drake",
+        "oracle_id": "d6ffdaf0-ac08-4de9-bbce-2eab2f86bcca"
+      },
+      "Wrath of God": {
+        "name": "Wrath of God",
+        "oracle_id": "34515b16-c9a4-4f98-8c77-416a7a523407"
+      },
+      "Yargle, Glutton of Urborg": {
+        "name": "Yargle, Glutton of Urborg",
+        "oracle_id": "ed66cd31-958f-4b28-82a3-e04acc819afc"
+      }
+    },
+    "checked_at_utc": "2026-11-17T11:02:26.743244+00:00"
+  }
+}

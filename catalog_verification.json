@@ -1,0 +1,107 @@
+{
+  "catalog": {
+    "schema_version": 1,
+    "normalizer_version": "1.1.0",
+    "provider": "Scryfall",
+    "created_at_utc": "2026-11-17T10:31:49.065559+00:00",
+    "catalog_sha256": "a5a398284ffa6719037862b46941d3ebbba7ce7f03261486755933e292873b8a",
+    "card_count": 36886,
+    "ruling_count": 79663,
+    "skipped_without_oracle_id": 0,
+    "unmatched_rulings": 0,
+    "duplicate_rulings": 43,
+    "skipped_art_series": 2411,
+    "oracle_sha256": "51305ae67913463acc864af6f896fe28ade7a3f5c3cd43e0484c5c1d3b15b31e",
+    "rulings_sha256": "2f61e548a41b952a250727ff452244663463b2e75f128c11460bd04a3594e009",
+    "oracle_updated_at": "2026-11-17T10:02:01.401+00:00",
+    "rulings_updated_at": "2026-11-17T10:00:31.940+00:00",
+    "oracle_download_uri": "https://data.scryfall.io/oracle-cards/oracle-cards-20261117100201.jsonl.gz",
+    "rulings_download_uri": "https://data.scryfall.io/rulings/rulings-20261117100031.jsonl.gz"
+  },
+  "http_lookups": [
+    {
+      "requested": "Blood Artist",
+      "canonical": "Blood Artist",
+      "oracle_id": "310f141c-7f37-4729-aed6-dd9c09db448d",
+      "ruling_count": 1,
+      "face_count": 0
+    },
+    {
+      "requested": "Rest in Peace",
+      "canonical": "Rest in Peace",
+      "oracle_id": "087f9ad7-e74f-40e2-8102-1ed2925d0418",
+      "ruling_count": 3,
+      "face_count": 0
+    },
+    {
+      "requested": "Wrath of God",
+      "canonical": "Wrath of God",
+      "oracle_id": "34515b16-c9a4-4f98-8c77-416a7a523407",
+      "ruling_count": 0,
+      "face_count": 0
+    },
+    {
+      "requested": "Sol Ring",
+      "canonical": "Sol Ring",
+      "oracle_id": "6ad8011d-3471-4369-9d68-b264cc027487",
+      "ruling_count": 0,
+      "face_count": 0
+    },
+    {
+      "requested": "Giant Spider",
+      "canonical": "Giant Spider",
+      "oracle_id": "e740ce2f-2134-473c-afa1-1b6d2d1e38ef",
+      "ruling_count": 1,
+      "face_count": 0
+    },
+    {
+      "requested": "Wind Drake",
+      "canonical": "Wind Drake",
+      "oracle_id": "d6ffdaf0-ac08-4de9-bbce-2eab2f86bcca",
+      "ruling_count": 0,
+      "face_count": 0
+    },
+    {
+      "requested": "Delver of Secrets",
+      "canonical": "Delver of Secrets // Insectile Aberration",
+      "oracle_id": "edd531b9-f615-4399-8c8c-1c5e18c4acbf",
+      "ruling_count": 1,
+      "face_count": 2
+    },
+    {
+      "requested": "Insectile Aberration",
+      "canonical": "Delver of Secrets // Insectile Aberration",
+      "oracle_id": "edd531b9-f615-4399-8c8c-1c5e18c4acbf",
+      "ruling_count": 1,
+      "face_count": 2
+    }
+  ],
+  "selected_contexts": [
+    {
+      "names": [
+        "Blood Artist",
+        "Rest in Peace",
+        "Wrath of God"
+      ],
+      "card_count": 3,
+      "bytes": 5959
+    },
+    {
+      "names": [
+        "Giant Spider",
+        "Wind Drake"
+      ],
+      "card_count": 2,
+      "bytes": 3208
+    },
+    {
+      "names": [
+        "Delver of Secrets // Insectile Aberration"
+      ],
+      "card_count": 1,
+      "bytes": 2439
+    }
+  ],
+  "integration": "Real Scryfall bulk import, local SQLite and HTTP card lookups. Generation with the existing RAG engine was simulated in unit tests; no AWS generation was run here.",
+  "unit_tests_passed": 26
+}
