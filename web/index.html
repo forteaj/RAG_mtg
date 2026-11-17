@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101515">
+  <title>Commander RAG — Tu mesa, las reglas claras</title>
+  <link rel="icon" href="/static/mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Ir a la consulta</a>
+  <aside class="sidebar">
+    <a class="brand" href="/" aria-label="Commander RAG, inicio">
+      <img src="/static/mark.svg" width="38" height="38" alt="">
+      <span>commander<span class="brand-sub">RAG / RULES ASSISTANT</span></span>
+    </a>
+    <div class="workspace-label">TU ESPACIO DE JUEGO</div>
+    <nav aria-label="Navegación principal">
+      <button class="nav-item active" id="new-query" type="button"><span aria-hidden="true">＋</span> Nueva consulta <span class="nav-indicator" aria-hidden="true"></span></button>
+      <a class="nav-item" href="#examples"><span aria-hidden="true">▧</span> Explorar ejemplos</a>
+      <a class="nav-item" href="/docs" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">⌘</span> Documentación API <span class="external" aria-hidden="true">↗</span></a>
+    </nav>
+    <div class="sidebar-note"><span class="small-label">PARA ESA INTERACCIÓN…</span><p>Cuando la mesa se complica, vuelve a las fuentes.</p><div class="mana-dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div></div>
+    <div class="sidebar-footer" title="El servidor responde; el acceso a AWS se comprueba al enviar una consulta."><span class="connection-dot" id="connection-dot"></span><span id="connection-label">Conectando…</span><span class="local-pill">LOCAL</span></div>
+  </aside>
+
+  <main id="main">
+    <header class="topbar"><span class="breadcrumb">Workspace <span>/</span> Consultas de reglas</span><span class="version-pill">MAGIC: THE GATHERING</span></header>
+    <section class="page-intro">
+      <div><p class="eyebrow"><span></span> TU MESA. LAS REGLAS CLARAS.</p><h1>Resuelve la próxima<br><em>interacción.</em></h1><p class="intro-copy">Describe la situación, añade las cartas y consulta<br class="desktop-break"> una respuesta acompañada de sus fuentes.</p></div>
+      <div class="intro-decoration" aria-hidden="true"><div class="orbit"></div><div class="mini-card back-card"><span>✧</span></div><div class="mini-card front-card"><span>✧</span><i></i><i></i></div><div class="orbit-dot"></div></div>
+    </section>
+
+    <div class="content-grid">
+      <section class="panel compose-panel" aria-labelledby="compose-title">
+        <div class="panel-heading"><span class="step-number">01</span><div><h2 id="compose-title">La situación</h2><p>Los detalles marcan la diferencia.</p></div><span class="heading-symbol" aria-hidden="true">✦</span></div>
+        <form id="ruling-form">
+          <fieldset id="query-fields">
+            <label class="field-label" for="question">¿Qué ocurre en la mesa?<span id="char-count">0 / 4000</span></label>
+            <textarea id="question" name="question" maxlength="4000" required placeholder="I control Blood Artist and two other creatures. My opponent controls Rest in Peace…"></textarea>
+            <p class="field-hint"><span aria-hidden="true">◈</span> Por ahora, escribe la pregunta y los nombres de cartas en inglés.</p>
+            <div class="field-label cards-label"><label for="card-input">Cartas de referencia</label><span id="card-count">0 / 12</span></div>
+            <div class="card-search">
+              <span class="search-icon" aria-hidden="true"></span>
+              <input id="card-input" type="text" maxlength="200" autocomplete="off" spellcheck="false" placeholder="Buscar una carta…" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="card-suggestions" aria-describedby="card-hint">
+              <button type="button" id="add-card" aria-label="Añadir carta por su nombre exacto">＋</button>
+              <div id="card-suggestions" class="suggestions" role="listbox" aria-label="Cartas encontradas" hidden></div>
+            </div>
+            <p id="card-hint" class="field-hint">Busca por nombre y elige una carta del catálogo.</p>
+            <div id="selected-cards" class="selected-cards" aria-label="Cartas seleccionadas"></div>
+            <p id="reference-note" class="reference-note" hidden>Estas cartas aportan sus textos. Tu pregunta define cuáles están en el campo de batalla.</p>
+            <div id="form-feedback" class="inline-feedback" role="status" aria-live="polite"></div>
+            <div class="submit-row"><button id="submit-query" type="submit" class="primary-button"><span>Consultar las reglas</span><span aria-hidden="true">↗</span></button><p>La consulta puede generar<br>consumo en AWS.</p></div>
+          </fieldset>
+        </form>
+      </section>
+
+      <section class="panel result-panel" aria-labelledby="result-title" aria-busy="false" id="result-panel">
+        <div class="panel-heading result-heading"><span class="step-number">02</span><div><h2 id="result-title">La resolución</h2><p>Una respuesta con contexto.</p></div><span class="result-badge" id="result-badge">LISTO PARA CONSULTAR</span></div>
+        <div id="empty-result" class="empty-result"><div class="rule-emblem" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none"><path d="M12 14h14a7 7 0 0 1 7 7v26a12 12 0 0 0-9-4H12V14Zm36 0H34a7 7 0 0 0-7 7"/><path d="M48 14v29H36a12 12 0 0 0-9 4M18 23h8m-8 7h8m10-7h6m-6 7h6"/></svg></div><h3>Cada interacción tiene<br>su explicación.</h3><p>Tu resolución aparecerá aquí, junto a las reglas y los textos de las cartas que la respaldan.</p><div class="empty-features"><span><i></i> Situación concreta</span><span><i></i> Fuentes originales</span></div></div>
+        <div id="loading-result" class="loading-result" role="status" aria-live="polite" hidden><div class="loading-rings" aria-hidden="true"></div><h3>Consultando las reglas</h3><p>Estamos preparando la respuesta y sus fuentes.</p><span id="loading-time" class="elapsed">0 s</span></div>
+        <div id="error-result" class="error-result" role="alert" hidden><span class="error-symbol" aria-hidden="true">!</span><h3 id="error-title"></h3><p id="error-message"></p><details id="error-details"><summary>Ver detalle técnico</summary><pre id="error-raw"></pre></details></div>
+        <div id="answer-result" class="answer-result" hidden>
+          <div id="trigger-block" class="trigger-block" hidden><div><span class="small-label">DISPAROS DE LA HABILIDAD</span><div class="trigger-value" id="trigger-value"></div></div><span class="trigger-icon" aria-hidden="true">↻</span></div>
+          <div id="clarification-block" class="clarification-block" hidden><span class="small-label">FALTA UN DATO DE LA SITUACIÓN</span><p id="clarification-question"></p><button id="edit-question" class="text-button" type="button">Editar mi pregunta <span aria-hidden="true">↗</span></button></div>
+          <p id="answer-text" class="answer-text"></p>
+          <div id="citation-chips" class="citation-chips" aria-label="Citas de la respuesta"></div>
+          <div class="sources-heading"><h3>Fuentes utilizadas</h3><span id="source-count"></span></div>
+          <div id="source-list" class="source-list"></div>
+          <div class="answer-actions"><button id="copy-answer" class="secondary-button" type="button">Copiar respuesta</button><button id="download-result" class="text-button" type="button">Guardar JSON <span aria-hidden="true">↓</span></button></div>
+          <details class="technical-details"><summary>Detalles de la consulta</summary><dl id="query-details"></dl><p class="small-label">PREGUNTA CONSULTADA</p><p id="submitted-question"></p></details>
+        </div>
+      </section>
+    </div>
+
+    <section id="examples" class="examples-section" aria-labelledby="examples-title"><div class="section-heading"><h2 id="examples-title">Empieza por una interacción</h2><span>CARGA UN EJEMPLO Y HAZLO TUYO</span></div><div class="example-grid">
+      <button class="example-card" data-example="death" type="button"><span class="example-icon" aria-hidden="true">↝</span><span class="example-content"><span class="example-title">¿Mueren o se exilian?</span><span class="example-subtitle">Blood Artist · Rest in Peace</span></span><span class="example-arrow" aria-hidden="true">↗</span></button>
+      <button class="example-card" data-example="blocking" type="button"><span class="example-icon spider-icon" aria-hidden="true">✧</span><span class="example-content"><span class="example-title">Un bloqueo desde tierra</span><span class="example-subtitle">Giant Spider · Wind Drake</span></span><span class="example-arrow" aria-hidden="true">↗</span></button>
+      <button class="example-card" data-example="commander" type="button"><span class="example-icon" aria-hidden="true">♜</span><span class="example-content"><span class="example-title">Volver a la zona de mando</span><span class="example-subtitle">Blood Artist · Yargle</span></span><span class="example-arrow" aria-hidden="true">↗</span></button>
+    </div></section>
+    <footer class="page-footer"><span>COMMANDER RAG <span class="footer-divider">/</span> Aprende de cada interacción.</span><span>Proyecto independiente · No afiliado a Wizards of the Coast.</span></footer>
+    <div id="announcement" class="sr-only" role="status" aria-live="polite"></div>
+  </main>
+</body>
+</html>

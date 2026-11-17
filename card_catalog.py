@@ -363,6 +363,28 @@ def lookup_card(name, path=DEFAULT_DB):
         return _lookup(db, name)
 
 
+def search_cards(query, path=DEFAULT_DB, limit=8):
+    """Indexed prefix lookup over canonical names and face aliases; no AWS."""
+    key = name_key(query)
+    if len(key) < 2:
+        return []
+    if not 1 <= limit <= 20:
+        raise ValueError("Search limit must be between 1 and 20.")
+    with connect_catalog(path) as (db, _):
+        rows = db.execute(
+            "SELECT DISTINCT c.oracle_id,c.name,c.payload FROM aliases a "
+            "JOIN cards c USING(oracle_id) WHERE a.name_key>=? AND a.name_key<? "
+            "ORDER BY c.name LIMIT ?", (key, key + chr(0x10FFFF), limit),
+        ).fetchall()
+        result = []
+        for row in rows:
+            card = json.loads(row["payload"])
+            result.append({"oracle_id": row["oracle_id"], "name": row["name"],
+                           "type_line": card.get("type_line", ""), "mana_cost": card.get("mana_cost", ""),
+                           "color_identity": card.get("color_identity", [])})
+        return result
+
+
 def context_file(names, path=DEFAULT_DB, cache_dir=None):
     """Export just the requested cards in fetch_cards.py's legacy JSON schema.
 

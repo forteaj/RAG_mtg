@@ -1,4 +1,4 @@
-"""Local HTTP adapter for retrieve_rules.py 1.5.0. Run: python -m uvicorn api:app"""
+"""Local HTTP adapter for retrieve_rules.py 1.5.x. Run: python -m uvicorn api:app"""
 from __future__ import annotations
 
 import argparse
@@ -6,19 +6,22 @@ import importlib
 import logging
 import os
 from dataclasses import dataclass
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 from threading import Lock
 from typing import Annotated, Any, Literal
 
 from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints, ValidationError, model_validator
 
-from card_catalog import CatalogError, CardNameError, context_file, lookup_card
+from card_catalog import CatalogError, CardNameError, context_file, lookup_card, search_cards
 
 ROOT = Path(__file__).resolve().parent
+API_VERSION = "0.3.0"
 LOG = logging.getLogger("mtg_api")
 Name = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=200)]
+SearchTerm = Annotated[str, StringConstraints(strip_whitespace=True, min_length=2, max_length=200)]
 
 
 class RulingRequest(BaseModel):
@@ -103,9 +106,10 @@ class RulingResponse(BaseModel):
 
 
 class ServiceError(Exception):
-    def __init__(self, status_code: int, code: str, message: str):
+    def __init__(self, status_code: int, code: str, message: str, details: dict[str, Any] | None = None):
         super().__init__(message)
         self.status_code, self.code = status_code, code
+        self.details = details or {}
 
 
 @dataclass(frozen=True)
@@ -222,7 +226,14 @@ class RulingService:
             if code in {"AccessDeniedException", "ExpiredToken", "ExpiredTokenException", "UnrecognizedClientException"} or type(exc).__name__ in {"NoCredentialsError", "ProfileNotFound", "TokenRetrievalError", "CredentialRetrievalError", "UnauthorizedSSOTokenError", "SSOTokenLoadError"}:
                 raise ServiceError(503, "aws_credentials", "Check the commander-rag AWS login, profile and Bedrock permissions in the server environment.") from None
             if isinstance(exc, ValueError):
-                raise ServiceError(502, "engine_rejected_result", "The engine could not complete or validate the result. Check the server log.") from None
+                reason, separator, diagnostic = str(exc).partition(" Details saved in ")
+                details = {
+                    "engine_version": str(getattr(self._engine, "PIPELINE_VERSION", "unknown")),
+                    "validation_error": reason[:1000],
+                    # Keep a useful filename without exposing the machine's full path.
+                    "diagnostic_file": PureWindowsPath(diagnostic.strip()).name if separator else None,
+                }
+                raise ServiceError(502, "engine_rejected_result", "The engine could not complete or validate the result. See validation_error and the diagnostic file.", details=details) from None
             raise ServiceError(502, "engine_failure", "The RAG engine failed. Check the server log.") from None
         finally:
             self._lock.release()
@@ -230,19 +241,37 @@ class RulingService:
 
 def create_app(service: RulingService | None = None) -> FastAPI:
     application = FastAPI(
-        title="MTG Rulings — local API", version="0.2.0",
+        title="MTG Rulings — local API", version=API_VERSION,
         description="English questions using locally stored reference cards. Reference cards are documentation; the question defines which are active. Uses the existing Bedrock RAG engine.",
     )
     application.state.ruling_service = service if service is not None else RulingService()
+    web_root = ROOT / "web"
+    application.mount("/static", StaticFiles(directory=str(web_root), check_dir=False), name="static")
+
+    @application.get("/", include_in_schema=False)
+    def home():
+        page = web_root / "index.html"
+        if not page.is_file():
+            return HTMLResponse("La interfaz no está instalada. Copia la carpeta web junto a api.py.", status_code=503)
+        return FileResponse(page, media_type="text/html", headers={"Cache-Control": "no-cache"})
 
     @application.exception_handler(ServiceError)
     async def service_error_handler(_request: Request, exc: ServiceError):
-        return JSONResponse(status_code=exc.status_code, content={"error": {"code": exc.code, "message": str(exc)}})
+        return JSONResponse(status_code=exc.status_code, content={"error": {"code": exc.code, "message": str(exc), **exc.details}})
 
     @application.get("/health", tags=["health"])
     def health():
         """Process liveness only. Does not import the RAG engine or contact AWS."""
-        return {"status": "ok", "service": "mtg-rulings", "api_version": "0.2.0"}
+        return {"status": "ok", "service": "mtg-rulings", "api_version": API_VERSION}
+
+    @application.get("/card-search", tags=["cards"], responses={503: {"description": "SQLite catalog unavailable"}})
+    def card_search(q: SearchTerm, request: Request):
+        """Prefix autocomplete using local English card and face names. No AWS."""
+        try:
+            matches = search_cards(q, request.app.state.ruling_service.settings.cards_db)
+        except CatalogError as exc:
+            raise ServiceError(503, "catalog_unavailable", str(exc)) from None
+        return {"query": q, "results": matches}
 
     @application.get("/cards", tags=["cards"], responses={404: {"description": "Card not found"}, 503: {"description": "SQLite catalog unavailable"}})
     def card(name: Name, request: Request):

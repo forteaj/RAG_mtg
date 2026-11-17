@@ -4,14 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0a704e38-4a9b-4903-a39a-86d9d5ededcc" name="Changes" comment="generator">
-      <change afterPath="$PROJECT_DIR$/README-API.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/request_with_rip.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/request_without_rip.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements-api.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_api.py" afterDir="false" />
+    <list default="true" id="0a704e38-4a9b-4903-a39a-86d9d5ededcc" name="Changes" comment="moaaar">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/card_catalog.py" beforeDir="false" afterPath="$PROJECT_DIR$/card_catalog.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/retrieve_rules.py" beforeDir="false" afterPath="$PROJECT_DIR$/retrieve_rules.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,13 +121,22 @@
       <option name="project" value="LOCAL" />
       <updated>1794851206343</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="moaaar">
+      <option name="closed" value="true" />
+      <created>1794916187135</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1794916187135</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first" />
     <MESSAGE value="bedrockTest" />
     <MESSAGE value="generator" />
-    <option name="LAST_COMMIT_MESSAGE" value="generator" />
+    <MESSAGE value="moaaar" />
+    <option name="LAST_COMMIT_MESSAGE" value="moaaar" />
   </component>
 </project>
